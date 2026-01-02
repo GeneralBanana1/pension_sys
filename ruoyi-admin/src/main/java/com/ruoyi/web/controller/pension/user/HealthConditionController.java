@@ -16,19 +16,21 @@ import org.springframework.web.bind.annotation.*;
 public class HealthConditionController {
     @Autowired
     private IPeHealthConditionService pehealthConditionService;
-
-    @ApiOperation("查询健康信息")
-    @GetMapping("/select")
-    public R listHealthCondition(@RequestParam Long customerId){
-        return pehealthConditionService.selectById(customerId);
+    @ApiOperation("查询健康信息/redis")
+    @GetMapping("/selectFromRedis")
+    public R selectFromRedis(@RequestParam Long customerId){
+        return pehealthConditionService.selectFromRedis(customerId);
     }
-
+    @ApiOperation("查询健康信息/mysql")
+    @GetMapping("/selectFromMysql")
+    public R selectFromMysql(@RequestParam Long customerId){
+        return pehealthConditionService.selectFromMysql(customerId);
+    }
     @ApiOperation("添加健康信息")
     @PostMapping("/add")
     public R addHealthCondition(@RequestBody PeHealthConditionParam peHealthConditionParam){
         return pehealthConditionService.addHealthCondition(peHealthConditionParam);
     }
-
     @ApiOperation("修改健康信息")
     @PutMapping("/update")
     public R updateHealthCondition(@RequestBody PeHealthConditionParam peHealthConditionParam){

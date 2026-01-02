@@ -26,10 +26,11 @@ public class PeHealthConditionSerivceImpl extends ServiceImpl<PeHealthConditionM
     @Autowired
     private PeHealthConditionMapper healthConditionMapper;
 
+
     @Autowired
     private StringRedisTemplate redisTemplate;
     @Override
-    public R selectById(Long customerId) {
+    public R selectFromRedis(Long customerId) {
         if (customerId == null)
             return R.fail("老人id不能为空");
         Set<String> keys = redisTemplate.keys("*" + customerId);
@@ -44,7 +45,7 @@ public class PeHealthConditionSerivceImpl extends ServiceImpl<PeHealthConditionM
             queryWrapper.eq("user_id",customerId);
             PeHealthCondition peHealthCondition = healthConditionMapper.selectOne(queryWrapper);
             if (peHealthCondition==null){
-                return R.fail("老人不存在");
+                return R.fail("健康信息不存在");
             }else{
                 PeHealthConditionParam peHealthConditionParam = PeHealthConditionMapping.INSTANCE.POToDTO(peHealthCondition);
                 saveToRedis(peHealthConditionParam);
@@ -73,13 +74,26 @@ public class PeHealthConditionSerivceImpl extends ServiceImpl<PeHealthConditionM
         queryWrapper.eq("user_id",userId);
         PeHealthCondition peHealthCondition = healthConditionMapper.selectOne(queryWrapper);
         if (peHealthCondition==null){
-            return R.fail("老人不存在");
+            return R.fail("健康信息不存在");
         }else{
             saveToRedis(peHealthConditionParam);
             PeHealthCondition peHealthCondition2 = PeHealthConditionMapping.INSTANCE.DTOToPO(peHealthConditionParam);
             healthConditionMapper.updateHealth(peHealthCondition2);
             return R.ok();
         }
+    }
+
+    @Override
+    public R selectFromMysql(Long customerId) {
+        if (customerId == null)
+            return R.fail("老人id不能为空");
+        PeHealthCondition peHealthCondition = healthConditionMapper.selectById(customerId);
+        PeHealthConditionParam peHealthConditionParam = PeHealthConditionMapping.INSTANCE.POToDTO(peHealthCondition);
+        if (peHealthCondition==null)
+            return R.fail("健康信息不存在");
+        else
+            return R.ok(peHealthConditionParam);
+
     }
 
     private void saveToRedis(PeHealthConditionParam peHealthConditionParam){
