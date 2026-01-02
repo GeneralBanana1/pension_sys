@@ -12,6 +12,10 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 public class PeContactsParam {
+
+    @NotNull(message = "联系人id不能为空")
+    @ApiModelProperty("联系人id")
+    private Long contactsId;
     @ApiModelProperty("联系人所属老人id")
     @NotNull(message = "联系人所属老人id不能为空")
     private Long userId;

@@ -53,8 +53,8 @@ public class ContactsController extends BaseController {
     }
 
     @ApiOperation("删除联系人")
-    @DeleteMapping("/delete")
-    private R deleteContacts(@ApiParam("联系人id") Long contactsId){
+    @DeleteMapping("/delete/{contactsId}")
+    private R deleteContacts(@PathVariable @ApiParam("联系人id") Long contactsId){
         return contactsService.deleteContacts(contactsId);
     }
 }
