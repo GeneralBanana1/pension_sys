@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruoyi.mapper.PeHealthConditionMapper">
+
+    <update id="updateHealth">
+        update pe_health_condition
+        <set>
+            <if test="bloodPressure != null">blood_pressure = #{bloodPressure},</if>
+            <if test="heartRate != null">heart_rate = #{heartRate},</if>
+            <if test="bloodOxygen != null">blood_oxygen = #{bloodOxygen},</if>
+            <if test="bodyTemperature != null">body_temperature = #{bodyTemperature},</if>
+            <if test="fastingBloodSugar != null">fasting_blood_sugar = #{fastingBloodSugar},</if>
+            <if test="bloodSugar2hAfterMeal != null">blood_sugar_2h_after_meal = #{bloodSugar2hAfterMeal},</if>
+            <if test="mobilityLevel != null">mobility_level = #{mobilityLevel},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            update_time = now()
+        </set>
+        where user_id = #{userId}
+    </update>
+</mapper>

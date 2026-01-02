@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruoyi.mapper.PeMedicationPlansMapper">
+
+    <resultMap id="list" type="com.ruoyi.domain.vo.publics.MedicationPlansListVO">
+        <id property="medicationPlansId" column="medication_plans_id"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="drugName" column="drug_name"/>
+        <result property="dosage" column="dosage"/>
+        <result property="frequency" column="frequency"/>
+        <result property="isActive" column="is_active"/>
+        <result property="remark" column="remark"/>
+        <collection property="records"
+                    ofType="com.ruoyi.domain.vo.publics.PeMedicationRecordListVO"
+                    select="records"
+                    column="{medicationPlansId=medication_plans_id, userId=user_id}">
+            <id property="medicationRecordId" column="medication_record_id"/>
+            <result property="time" column="time"/>
+            <result property="remark" column="remark"/>
+            <result property="createBy" column="create_by"/>
+            <result property="createTime" column="create_time"/>
+        </collection>
+    </resultMap>
+
+    <select id="list" resultMap="list">
+        SELECT
+        pe_medication_plans.medication_plans_id,
+        pe_medication_plans.drug_name,
+        sys_user.nick_name,
+        pe_medication_plans.dosage,
+        pe_medication_plans.frequency,
+        pe_medication_plans.is_active,
+        pe_medication_plans.remark,
+        pe_medication_plans.user_id
+        FROM
+        pe_medication_plans
+        INNER JOIN sys_user
+        ON pe_medication_plans.user_id = sys_user.user_id
+        WHERE sys_user.user_id = #{userId}
+        AND pe_medication_plans.del_flag != '2'
+    </select>
+
+    <select id="records" resultType="com.ruoyi.domain.vo.publics.PeMedicationRecordListVO">
+        SELECT
+        pe_medication_record.remark,
+        pe_medication_record.time,
+        pe_medication_record.create_by,
+        pe_medication_record.create_time,
+        pe_medication_record.medication_record_id
+        FROM
+        pe_medication_record
+        WHERE
+        pe_medication_record.medication_plans_id = #{medicationPlansId}
+        AND pe_medication_record.del_flag != '2'
+    </select>
+
+
+</mapper>
