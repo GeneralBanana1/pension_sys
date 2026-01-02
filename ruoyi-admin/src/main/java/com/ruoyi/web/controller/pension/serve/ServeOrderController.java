@@ -1,7 +1,6 @@
 package com.ruoyi.web.controller.pension.serve;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.ruoyi.common.constant.PeConstants;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -9,17 +8,13 @@ import com.ruoyi.domain.entity.PeOrder;
 import com.ruoyi.domain.param.user.PageQuery;
 import com.ruoyi.domain.vo.service.ServiceOrderQueryVO;
 import com.ruoyi.domain.vo.service.ServiceUpdateStateParam;
-import com.ruoyi.domain.vo.user.UserOrderQueryVO;
 import com.ruoyi.service.IPeOrderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,9 +35,16 @@ public class ServeOrderController extends BaseController {
         return getDataTable(list);
     }
 
+    @ApiOperation("用户列表")
+    @GetMapping("/user/list")
+    public TableDataInfo userList(@Validated PageQuery query){
+        startPage();
+        return getDataTable(orderService.userList(getUserId()));
+    }
+
     @ApiOperation("修改订单状态")
     @PutMapping("/updateState")
-    public R updateState(@ApiParam("修改订单状态参数") @Validated ServiceUpdateStateParam param){
+    public R updateState(@RequestBody @Validated ServiceUpdateStateParam param){
 
         Long orderId = param.getOrderId();
         String state = param.getState();

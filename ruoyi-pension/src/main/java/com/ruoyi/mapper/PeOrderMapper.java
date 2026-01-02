@@ -20,4 +20,5 @@ public interface PeOrderMapper extends BaseMapper<PeOrder> {
 
     List<AdminOrderQueryVO> adminOrderList(@Param("ew")Wrapper ew);
 
+    List<Long> customerList(@Param("serviceId") Long serviceId);
 }

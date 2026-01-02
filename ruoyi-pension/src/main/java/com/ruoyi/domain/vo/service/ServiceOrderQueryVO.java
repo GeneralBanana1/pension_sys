@@ -30,6 +30,9 @@ public class ServiceOrderQueryVO {
     @ApiModelProperty("订单状态")
     private String state;
 
+    @ApiModelProperty("老人id")
+    private Long customerId;
+
     @ApiModelProperty("发单人")
     private String customer;
 

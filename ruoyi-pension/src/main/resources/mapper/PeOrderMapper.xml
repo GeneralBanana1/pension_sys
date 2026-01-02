@@ -36,6 +36,7 @@
             pe_order.details,
             pe_order.create_time,
             pe_order.service_id,
+            pe_order.customer_id,
             sys_user.nick_name customer,
             sys_user.phonenumber
         FROM
@@ -74,6 +75,15 @@
                 pe_order.service_id = service.user_id
             ${ew.customSqlSegment}
 
+    </select>
+
+    <select id="customerList" resultType="java.lang.Long">
+        SELECT
+            DISTINCT customer_id
+        FROM
+            pe_order
+        WHERE
+            service_id = #{serviceId}
     </select>
 
 

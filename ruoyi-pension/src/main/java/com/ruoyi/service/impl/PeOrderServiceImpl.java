@@ -68,4 +68,9 @@ public class PeOrderServiceImpl extends ServiceImpl<PeOrderMapper, PeOrder>
 
         return orderMapper.updateById(peOrder);
     }
+
+    @Override
+    public List<Long> userList(Long serviceId) {
+        return orderMapper.customerList(serviceId);
+    }
 }

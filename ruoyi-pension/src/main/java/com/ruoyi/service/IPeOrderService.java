@@ -17,4 +17,7 @@ public interface IPeOrderService extends IService<PeOrder> {
     List<AdminOrderQueryVO>  adminOrderList(String state);
 
     int dispatch(Long orderId,Long userId);
+
+    List<Long> userList(Long serviceId);
+
 }
