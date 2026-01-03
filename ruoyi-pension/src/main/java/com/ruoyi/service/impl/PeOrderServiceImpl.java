@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.constant.PeConstants;
 import com.ruoyi.domain.entity.PeOrder;
 import com.ruoyi.domain.vo.admin.AdminOrderQueryVO;
+import com.ruoyi.domain.vo.service.CustomerVo;
 import com.ruoyi.domain.vo.service.ServiceOrderQueryVO;
 import com.ruoyi.domain.vo.user.UserOrderQueryVO;
 import com.ruoyi.mapper.PeOrderMapper;
@@ -70,7 +71,7 @@ public class PeOrderServiceImpl extends ServiceImpl<PeOrderMapper, PeOrder>
     }
 
     @Override
-    public List<Long> userList(Long serviceId) {
+    public List<CustomerVo> userList(Long serviceId) {
         return orderMapper.customerList(serviceId);
     }
 }

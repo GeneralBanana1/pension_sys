@@ -1,6 +1,7 @@
 package com.ruoyi.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.core.domain.R;
@@ -33,10 +34,13 @@ public class PeHealthConditionSerivceImpl extends ServiceImpl<PeHealthConditionM
     public R selectFromRedis(Long customerId) {
         if (customerId == null)
             return R.fail("老人id不能为空");
-        Set<String> keys = redisTemplate.keys("*" + customerId);
+        Set<String> keys = redisTemplate.keys("health" +"*" + customerId);
         List<PeHealthConditionParam> list = new ArrayList<>();
         for (String key : keys) {
             String s = redisTemplate.opsForValue().get(key);
+            System.out.println("-----------------------");
+            System.out.println(key +":" + s);
+            System.out.println("-----------------------");
             PeHealthConditionParam peHealthConditionParam = JSONObject.parseObject(s, PeHealthConditionParam.class);
             list.add(peHealthConditionParam);
         }
@@ -87,7 +91,9 @@ public class PeHealthConditionSerivceImpl extends ServiceImpl<PeHealthConditionM
     public R selectFromMysql(Long customerId) {
         if (customerId == null)
             return R.fail("老人id不能为空");
-        PeHealthCondition peHealthCondition = healthConditionMapper.selectById(customerId);
+        LambdaQueryWrapper<PeHealthCondition> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(PeHealthCondition::getUserId,customerId);
+        PeHealthCondition peHealthCondition = healthConditionMapper.selectOne(queryWrapper);
         PeHealthConditionParam peHealthConditionParam = PeHealthConditionMapping.INSTANCE.POToDTO(peHealthCondition);
         if (peHealthCondition==null)
             return R.fail("健康信息不存在");

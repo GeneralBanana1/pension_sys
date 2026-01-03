@@ -26,6 +26,8 @@ public class PeHealthCondition {
 
   private String fastingBloodSugar;
 
+
+  @TableField(value = "blood_sugar_2h_after_meal")
   private String bloodSugar2hAfterMeal;
 
   private String mobilityLevel;

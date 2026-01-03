@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.domain.entity.PeOrder;
 import com.ruoyi.domain.vo.admin.AdminOrderQueryVO;
+import com.ruoyi.domain.vo.service.CustomerVo;
 import com.ruoyi.domain.vo.service.ServiceOrderQueryVO;
 import com.ruoyi.domain.vo.user.UserOrderQueryVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -20,5 +21,5 @@ public interface PeOrderMapper extends BaseMapper<PeOrder> {
 
     List<AdminOrderQueryVO> adminOrderList(@Param("ew")Wrapper ew);
 
-    List<Long> customerList(@Param("serviceId") Long serviceId);
+    List<CustomerVo> customerList(@Param("serviceId") Long serviceId);
 }

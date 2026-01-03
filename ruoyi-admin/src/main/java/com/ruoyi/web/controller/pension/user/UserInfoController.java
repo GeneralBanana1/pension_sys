@@ -3,10 +3,11 @@ package com.ruoyi.web.controller.pension.user;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.domain.param.user.SetRoleParam;
 import com.ruoyi.domain.param.user.OldFamilyParam;
+import com.ruoyi.domain.vo.service.CustomerVo;
+import com.ruoyi.domain.vo.user.OldVo;
 import com.ruoyi.domain.vo.user.UserInfoVO;
 import com.ruoyi.mapping.PeOldFamilyMapping;
 import com.ruoyi.mapping.UserMapping;
@@ -71,5 +72,12 @@ public class UserInfoController extends BaseController {
     public R addOldFamily(@RequestBody @Validated OldFamilyParam param){
         return R.to(oldFamilyService.save(PeOldFamilyMapping.INSTANCE.to(param)));
     }
+
+    @ApiOperation("获取绑定的亲属与老人")
+    @GetMapping("/old/family")
+    public R<List<OldVo>> list(){
+        return R.ok(oldFamilyService.list(getUserId()));
+    }
+
 
 }

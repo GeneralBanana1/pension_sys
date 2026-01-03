@@ -3,4 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ruoyi.mapper.PeOldFamilyMapper">
 
+    <select id="list" resultType="com.ruoyi.domain.vo.user.OldVo">
+        SELECT
+            DISTINCT old_id,
+            sys_user.nick_name,
+            relationship
+        FROM pe_old_family
+        LEFT JOIN
+            sys_user
+        ON pe_old_family.old_id = sys_user.user_id
+        WHERE
+            pe_old_family.family_id = #{userId}
+    </select>
 </mapper>

@@ -37,8 +37,7 @@ public class ServeOrderController extends BaseController {
 
     @ApiOperation("用户列表")
     @GetMapping("/user/list")
-    public TableDataInfo userList(@Validated PageQuery query){
-        startPage();
+    public TableDataInfo userList(){
         return getDataTable(orderService.userList(getUserId()));
     }
 
