@@ -1,14 +1,17 @@
 package com.ruoyi.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.domain.entity.PeOldFamily;
 import com.ruoyi.domain.vo.service.CustomerVo;
 import com.ruoyi.domain.vo.user.OldVo;
+import com.ruoyi.domain.vo.user.UserListVO;
 import com.ruoyi.mapper.PeOldFamilyMapper;
 import com.ruoyi.service.IPeOldFamilyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -20,5 +23,10 @@ public class PeOldFamilyServiceImpl extends ServiceImpl<PeOldFamilyMapper, PeOld
     @Override
     public List<OldVo> list(Long userId) {
         return oldFamilyMapper.list(userId);
+    }
+
+    @Override
+    public List<UserListVO> listOld(Wrapper ew) {
+        return oldFamilyMapper.listOld(ew);
     }
 }

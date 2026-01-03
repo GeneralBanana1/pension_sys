@@ -14,7 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Api(tags = "公共-用药计划记录")
-@RestController("/medication/records")
+@RequestMapping("/medication/records")
+@RestController
 public class MedicationRecordController {
 
     @Autowired

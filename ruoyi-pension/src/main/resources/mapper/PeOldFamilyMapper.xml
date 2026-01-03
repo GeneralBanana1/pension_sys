@@ -15,4 +15,12 @@
         WHERE
             pe_old_family.family_id = #{userId}
     </select>
+
+    <select id="listOld" resultType="com.ruoyi.domain.vo.user.UserListVO">
+        SELECT
+            user_id,
+            nick_name
+        FROM sys_user
+        ${ew.customSqlSegment}
+    </select>
 </mapper>

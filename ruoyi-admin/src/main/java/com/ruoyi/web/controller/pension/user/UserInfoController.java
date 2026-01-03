@@ -1,9 +1,13 @@
 package com.ruoyi.web.controller.pension.user;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.common.core.domain.entity.SysUser;
+import com.ruoyi.domain.entity.PeOldFamily;
+import com.ruoyi.domain.param.user.QueryOldParam;
 import com.ruoyi.domain.param.user.SetRoleParam;
 import com.ruoyi.domain.param.user.OldFamilyParam;
 import com.ruoyi.domain.vo.service.CustomerVo;
@@ -70,7 +74,27 @@ public class UserInfoController extends BaseController {
     @ApiOperation("绑定亲属与老人")
     @PostMapping("/old/family")
     public R addOldFamily(@RequestBody @Validated OldFamilyParam param){
+
+        Long familyId = param.getFamilyId();
+        Long oldId = param.getOldId();
+
+        LambdaQueryWrapper<PeOldFamily> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(PeOldFamily::getFamilyId, familyId)
+                .eq(PeOldFamily::getOldId, oldId);
+        PeOldFamily one = oldFamilyService.getOne(lqw);
+        if (one != null)
+            return R.fail("已与该用户绑定");
+
         return R.to(oldFamilyService.save(PeOldFamilyMapping.INSTANCE.to(param)));
+    }
+
+    @ApiOperation("解绑亲属与老人")
+    @DeleteMapping("/old/family/{oldId}")
+    public R deletOldFamily(@PathVariable Long oldId){
+        LambdaQueryWrapper<PeOldFamily> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(PeOldFamily::getFamilyId, getUserId())
+                .eq(PeOldFamily::getOldId, oldId);
+        return R.to(oldFamilyService.remove(lqw));
     }
 
     @ApiOperation("获取绑定的亲属与老人")
@@ -78,6 +102,18 @@ public class UserInfoController extends BaseController {
     public R<List<OldVo>> list(){
         return R.ok(oldFamilyService.list(getUserId()));
     }
+
+    @ApiOperation("获取老人列表")
+    @GetMapping("/old/list")
+    public R list(QueryOldParam param){
+        String phonenumber = param.getPhonenumber();
+        String nickName = param.getNickName();
+        QueryWrapper qw = new QueryWrapper();
+        qw.like(phonenumber != null, "phonenumber", phonenumber);
+        qw.like(nickName != null, "nick_name", nickName);
+        return R.ok(oldFamilyService.listOld(qw));
+    }
+
 
 
 }
