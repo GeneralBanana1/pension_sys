@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ruoyi.domain.entity.PeOldFamily;
 import com.ruoyi.domain.vo.user.OldVo;
-import com.ruoyi.domain.vo.user.UserListVO;
+import com.ruoyi.domain.vo.publics.UserListVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,5 +17,8 @@ public interface PeOldFamilyMapper extends BaseMapper<PeOldFamily> {
     List<OldVo> list(@Param("userId") Long userId);
 
     List<UserListVO> listOld(@Param("ew")Wrapper ew);
+
+    List<UserListVO> listUser(@Param("roleId") Long roleId);
+
 
 }

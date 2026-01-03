@@ -2,6 +2,7 @@ package com.ruoyi.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ruoyi.domain.entity.PeOrder;
+import com.ruoyi.domain.param.admin.OrderQueryParam;
 import com.ruoyi.domain.vo.admin.AdminOrderQueryVO;
 import com.ruoyi.domain.vo.service.CustomerVo;
 import com.ruoyi.domain.vo.service.ServiceOrderQueryVO;
@@ -15,7 +16,7 @@ public interface IPeOrderService extends IService<PeOrder> {
 
     List<ServiceOrderQueryVO> serviceOrderList(Long serviceId, String state);
 
-    List<AdminOrderQueryVO>  adminOrderList(String state);
+    List<AdminOrderQueryVO>  adminOrderList(OrderQueryParam param);
 
     int dispatch(Long orderId,Long userId);
 

@@ -52,7 +52,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			and date_format(r.create_time,'%Y%m%d') &lt;= date_format(#{params.endTime},'%Y%m%d')
 		</if>
 		<!-- 数据范围过滤 -->
-		${params.dataScope}
 		order by r.role_sort
 	</select>
     

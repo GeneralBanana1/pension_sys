@@ -1,4 +1,4 @@
-package com.ruoyi.domain.vo.user;
+package com.ruoyi.domain.vo.publics;
 
 
 import io.swagger.annotations.ApiModel;

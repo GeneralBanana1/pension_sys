@@ -10,6 +10,7 @@ import com.ruoyi.domain.entity.PeOldFamily;
 import com.ruoyi.domain.param.user.QueryOldParam;
 import com.ruoyi.domain.param.user.SetRoleParam;
 import com.ruoyi.domain.param.user.OldFamilyParam;
+import com.ruoyi.domain.param.user.UpdateUserInfoParam;
 import com.ruoyi.domain.vo.service.CustomerVo;
 import com.ruoyi.domain.vo.user.OldVo;
 import com.ruoyi.domain.vo.user.UserInfoVO;
@@ -114,6 +115,11 @@ public class UserInfoController extends BaseController {
         return R.ok(oldFamilyService.listOld(qw));
     }
 
+    @ApiOperation("修改用户信息")
+    @PutMapping("/update")
+    public R update(@RequestBody UpdateUserInfoParam param){
+        return R.to(userService.updateUserProfile(UserMapping.INSTANCE.to(param)));
+    }
 
 
 }

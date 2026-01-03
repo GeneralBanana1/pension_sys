@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ruoyi.common.constant.PeConstants;
 import com.ruoyi.domain.entity.PeOrder;
+import com.ruoyi.domain.param.admin.OrderQueryParam;
 import com.ruoyi.domain.vo.admin.AdminOrderQueryVO;
 import com.ruoyi.domain.vo.service.CustomerVo;
 import com.ruoyi.domain.vo.service.ServiceOrderQueryVO;
@@ -45,11 +46,22 @@ public class PeOrderServiceImpl extends ServiceImpl<PeOrderMapper, PeOrder>
     }
 
     @Override
-    public List<AdminOrderQueryVO> adminOrderList(String state) {
+    public List<AdminOrderQueryVO> adminOrderList(OrderQueryParam param) {
+
+        String orderNum = param.getOrderNum();
+        String state = param.getState();
+        String type = param.getType();
+        String customer = param.getCustomer();
+        String service = param.getService();
 
         QueryWrapper qw = new QueryWrapper();
         qw.ne("pe_order.del_flag", PeConstants.DEL);
         qw.eq(state!= null,"state",state);
+        qw.eq(type!= null,"type",type);
+        qw.like(orderNum!= null,"order_num",orderNum);
+        qw.like(customer!= null,"customer.nick_name",customer);
+        qw.like(service!= null,"service.nick_name",service);
+
 
         return orderMapper.adminOrderList(qw);
     }
@@ -74,4 +86,7 @@ public class PeOrderServiceImpl extends ServiceImpl<PeOrderMapper, PeOrder>
     public List<CustomerVo> userList(Long serviceId) {
         return orderMapper.customerList(serviceId);
     }
+
+
+
 }
