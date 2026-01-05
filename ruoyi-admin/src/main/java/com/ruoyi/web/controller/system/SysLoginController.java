@@ -10,7 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import com.alibaba.fastjson.JSONObject;
+
+import com.alibaba.fastjson2.JSONObject;
 import com.ruoyi.common.config.WxAppConfig;
 import com.ruoyi.common.core.domain.model.WxLoginBody;
 import com.ruoyi.common.utils.sign.Base64;

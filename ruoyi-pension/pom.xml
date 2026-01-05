@@ -7,7 +7,7 @@
         <version>3.9.1</version>
     </parent>
     <artifactId>ruoyi-pension</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>ruoyi-pension Maven Webapp</name>
     <url>http://maven.apache.org</url>
     <dependencies>
@@ -32,5 +32,15 @@
     </dependencies>
     <build>
         <finalName>ruoyi-pension</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

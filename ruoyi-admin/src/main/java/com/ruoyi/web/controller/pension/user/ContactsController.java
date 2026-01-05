@@ -39,7 +39,7 @@ public class ContactsController extends BaseController {
 
     @PostMapping( "/add")
     @ApiOperation("添加联系人")
-    private R addContacts(
+    public R addContacts(
             @RequestBody PeContactsParam PeContactsParam
                         ){
         return contactsService.addContacts(PeContactsParam);
@@ -48,13 +48,13 @@ public class ContactsController extends BaseController {
 
     @ApiOperation("修改联系人")
     @PutMapping("/update")
-    private R updateContacts(@RequestBody PeContactsParam peContactsParam){
+    public R updateContacts(@RequestBody PeContactsParam peContactsParam){
         return contactsService.updateContacts(peContactsParam);
     }
 
     @ApiOperation("删除联系人")
     @DeleteMapping("/delete/{contactsId}")
-    private R deleteContacts(@PathVariable @ApiParam("联系人id") Long contactsId){
+    public R deleteContacts(@PathVariable @ApiParam("联系人id") Long contactsId){
         return contactsService.deleteContacts(contactsId);
     }
 }
